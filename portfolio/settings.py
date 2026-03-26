@@ -5,13 +5,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-this-in-production-please')
 
-DEBUG = 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.vercel.app',          # all Vercel preview URLs
-    'https://portfolio-6b8f.vercel.app/',  # your production URL (update this)
+    'martinkiruna.vercel.app',  # your production URL (update this)
 ]
 
 INSTALLED_APPS = [
@@ -36,6 +36,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.template.context_processors.debug',
             ],
         },
     },
@@ -44,7 +45,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 # No database needed — project data lives in core/data.py
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Africa/Nairobi'
@@ -58,7 +64,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # Django 6 compatible static files storage
 STORAGES = {
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
