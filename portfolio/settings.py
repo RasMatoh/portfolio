@@ -11,7 +11,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.vercel.app',          # all Vercel preview URLs
-    'martinkiruna.vercel.app',  # your production URL (update this)
+    'https://portfolio-6b8f.vercel.app/',  # your production URL (update this)
 ]
 
 INSTALLED_APPS = [
