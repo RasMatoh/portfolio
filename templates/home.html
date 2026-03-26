@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-label">cs · security · ai developer</div>
+    <h1 class="hero-name">
+      <span class="first">Martin</span>
+      <span class="last">Kiuna</span>
+    </h1>
+    <div class="hero-title">
+      <span class="highlight">Computer Scientist</span> ·
+      <span class="highlight2">Red Team Enthusiast</span> · AI Engineer
+    </div>
+    <p class="hero-desc">
+      Final-year CS student building intelligent systems at the intersection of
+      machine learning, cybersecurity, and autonomous trading.
+    </p>
+    <div class="hero-actions">
+      <a href="{% url 'projects' %}" class="btn-primary">View Projects</a>
+      <a href="{% url 'contact' %}" class="btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+
+  <!-- TERMINAL -->
+  <div class="hero-terminal">
+    <div class="term-header">
+      <span class="term-dot td-red"></span>
+      <span class="term-dot td-yellow"></span>
+      <span class="term-dot td-green"></span>
+      <span class="term-title">martin@kali — bash</span>
+    </div>
+    <div class="term-body">
+      <div><span class="term-prompt">$ </span><span class="term-cmd">whoami</span></div>
+      <div class="term-out">martin_kiuna — cs student, red teamer</div>
+      <br>
+      <div><span class="term-prompt">$ </span><span class="term-cmd">cat skills.txt</span></div>
+      <div class="term-val">→ Offensive Security / CTFs</div>
+      <div class="term-val">→ ML / LSTM Trading Systems</div>
+      <div class="term-val">→ Django · FastAPI · PostgreSQL</div>
+      <div class="term-val">→ Python · Prolog · JavaScript</div>
+      <br>
+      <div><span class="term-prompt">$ </span><span class="term-cmd">nmap -sV target.ctf</span></div>
+      <div class="term-out">Scanning 192.168.1.1...</div>
+      <div class="term-val">80/tcp  open  http   nginx 1.24</div>
+      <div class="term-val">22/tcp  open  ssh    OpenSSH 9.2</div>
+      <div class="term-err">443/tcp open  https  TLSv1.3</div>
+      <br>
+      <div><span class="term-prompt">$ </span><span class="cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PROJECTS PREVIEW -->
+<section id="featured">
+  <div class="container">
+    <div class="section-label">featured work</div>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-sub">A selection of what I've built. <a href="{% url 'projects' %}" class="text-neon">See all projects →</a></p>
+
+    <div class="projects-grid">
+      {% for project in projects %}
+      <div class="project-card fade-up">
+        <div class="card-banner {{ project.banner_class }}">
+          <div class="card-banner-grid"></div>
+          <span class="card-banner-icon">{{ project.icon }}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            {% for cat in project.categories %}
+            <span class="tag tag-{{ cat }}">{{ cat }}</span>
+            {% endfor %}
+          </div>
+          <div class="card-title">{{ project.title }}</div>
+          <div class="card-desc">{{ project.short_desc }}</div>
+          <div class="card-impact">⚡ {{ project.impact }}</div>
+          <div class="card-stack">
+            {% for tech in project.stack %}
+            <span class="stack-pill">{{ tech }}</span>
+            {% endfor %}
+          </div>
+          <div class="card-footer">
+            {% if project.github %}
+            <a href="{{ project.github }}" target="_blank" class="card-link">
+              <svg fill="currentColor" viewBox="0 0 24 24" width="14" height="14"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+            {% endif %}
+            {% if project.demo %}
+            <a href="{{ project.demo }}" target="_blank" class="card-link">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14" height="14"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+              Live Demo
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div style="text-align:center; margin-top:3rem;">
+      <a href="{% url 'projects' %}" class="btn-secondary">View All Projects</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+<section id="about-page">
+  <div class="container">
+    <div class="section-label">about me</div>
+
+    <div class="about-grid">
+
+      <!-- LEFT: TEXT -->
+      <div class="about-text fade-up">
+        
+        <!-- PROFILE PHOTO -->
+        <div class="profile-photo-wrap">
+          <div class="profile-photo-border">
+            <img src="{% static 'img/profile.jpg' %}" alt="Martin Kiuna" class="profile-photo">
+          </div>
+          <div class="profile-photo-tag">
+            <span class="status-dot"></span> martin_kiuna
+          </div>
+        </div>
+
+        <h1 class="section-title">Who I Am</h1>
+
+        <p>
+          Final-year <strong>Computer Science student</strong> based in Nairobi, Kenya,
+          with a deep focus on AI systems and offensive security. I build things that are
+          intelligent, secure, and production-aware — not just academic demos.
+        </p>
+        <p>
+          My core obsession is <strong>offensive security</strong> — red teaming, CTF
+          challenges, and understanding systems well enough to break them. That same
+          mindset bleeds into how I build: thinking about attack surfaces from day one.
+        </p>
+        <p>
+          Outside security, I'm deep into <strong>AI-driven trading systems</strong> —
+          using LSTM models to capture market patterns, and building the infrastructure
+          to act on those signals in real time.
+        </p>
+        <p>
+          Currently seeking an <strong>industrial attachment / internship</strong> in
+          security engineering, ML engineering, or backend development.
+        </p>
+
+        <div style="margin-top: 2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="{% url 'contact' %}" class="btn-primary">Get In Touch</a>
+          <!-- Uncomment once you add your CV to static/img/
+          <a href="{% static 'img/martin-kiuna-cv.pdf' %}" target="_blank" class="btn-secondary">Download CV</a>
+          -->
+        </div>
+      </div>
+
+      <!-- RIGHT: STATS + SKILLS -->
+      <div class="about-right fade-up">
+
+        <!-- STATS -->
+        <div class="stat-row">
+          {% for stat in stats %}
+          <div class="stat-cell">
+            <span class="stat-num">{{ stat.number }}</span>
+            <span class="stat-lbl">{{ stat.label }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- SKILLS -->
+        {% for group, items in skills_list %}
+        <div class="skills-group">
+          <div class="skills-group-title">{{ group }}</div>
+          <div class="skills-list">
+            {% for skill in items %}
+            <span class="skill-chip">{{ skill }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+
+
+      </div>
+    </div>
+
+    <!-- CURRENTLY LEARNING -->
+    <div class="learning-bar fade-up">
+      <div class="section-label" style="margin-top:4rem;">currently exploring</div>
+      <div class="learning-items">
+        <div class="learning-item">
+          <span class="learning-icon">🔴</span>
+          <span>Advanced Red Teaming</span>
+        </div>
+        <div class="learning-item">
+          <span class="learning-icon">🤖</span>
+          <span>Autonomous AI Agents</span>
+        </div>
+        <div class="learning-item">
+          <span class="learning-icon">📡</span>
+          <span>Network Protocol Analysis</span>
+        </div>
+        <div class="learning-item">
+          <span class="learning-icon">⛓️</span>
+          <span>Blockchain & DeFi Security</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

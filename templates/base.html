@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}Martin Kiuna{% endblock %} | CS · Security · AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- SCANLINES OVERLAY -->
+  <div class="scanlines"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">martin<span>@kiuna</span>:~$</div>
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">home</a></li>
+      <li><a href="{% url 'projects' %}" class="{% if request.resolver_match.url_name == 'projects' %}active{% endif %}">projects</a></li>
+      <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">about</a></li>
+      <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">contact</a></li>
+    </ul>
+    <div class="nav-status">
+      <span class="status-dot"></span>
+      available for internship
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="{% url 'home' %}" onclick="toggleMenu()">Home</a>
+    <a href="{% url 'projects' %}" onclick="toggleMenu()">Projects</a>
+    <a href="{% url 'about' %}" onclick="toggleMenu()">About</a>
+    <a href="{% url 'contact' %}" onclick="toggleMenu()">Contact</a>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">martin<span>@kiuna</span>:~$</div>
+      <p class="footer-copy">© 2025 Martin Kiuna · Nairobi, Kenya 🇰🇪</p>
+      <div class="footer-links">
+        <a href="https://github.com/RasMatoh" target="_blank">GitHub</a>
+        <a href="www.linkedin.com/in/martin-kiuna-964124341" target="_blank">LinkedIn</a>
+        <a href="mailto:kiunamartin2004@gmail.com">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
