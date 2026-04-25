@@ -92,7 +92,7 @@ PROJECTS = [
         'categories': ['web'],
         'icon': '🎟️',
         'banner_class': 'banner-web',
-        'github': 'https://github.com/martinkiruna/movie-booking',        # update
+        'github': 'https://github.com/RasMatoh/movie_ticket_booking',   
         'demo': '',
         'featured': False,
     },
