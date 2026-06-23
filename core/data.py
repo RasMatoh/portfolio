@@ -20,7 +20,7 @@ PROJECTS = [
         'categories': ['ai', 'trading', 'ml'],
         'icon': '🤖',
         'banner_class': 'banner-ai',
-        'github': 'https://github.com/RasMatoh/Crypto-trading-bot',   # update
+        'github': 'https://github.com/RasMatoh/AI-TRADING-ASSISTANT',
         'demo': '',
         'featured': True,
     },
@@ -38,7 +38,7 @@ PROJECTS = [
         'categories': ['security'],
         'icon': '🔐',
         'banner_class': 'banner-sec',
-        'github': 'https://github.com/martinkiruna/threat-detection',    # update
+        'github': 'https://github.com/RasMatoh/cybersentinel',
         'demo': '',
         'featured': True,
     },
@@ -56,7 +56,7 @@ PROJECTS = [
         'categories': ['trading', 'ai'],
         'icon': '📈',
         'banner_class': 'banner-fin',
-        'github': 'https://github.com/martinkiruna/binance-bot',          # update
+        'github': 'https://github.com/RasMatoh/Crypto-trading-bot',
         'demo': '',
         'featured': True,
     },
