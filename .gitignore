@@ -1,1 +1,21 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
 venv/
+
+# Freebuff metadata
+.freebuff/
+
+# User-generated state (not used by the site)
+db.sqlite3
+
+# Django collectstatic output — regenerated at deploy time.
+# NOTE: vercel.json serves /static/* from the repo filesystem; if you
+# enable a Vercel build step (see README), keep this ignored and add
+# "python manage.py collectstatic --noinput" to the build command.
+staticfiles/
+
+# Throwaway tooling venv (Pillow/PyMuPDF for asset pipeline)
+.tools/venv/

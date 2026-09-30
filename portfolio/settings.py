@@ -7,6 +7,20 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-this-in-produc
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
+# Vercel sets VERCEL_ENV in its runtime; absent locally and under `manage.py test`.
+# Hardening (HTTPS redirect, HSTS, secure cookies) therefore applies only in the
+# real deployment — local http://127.0.0.1:8000 keeps working.
+ON_VERCEL = bool(os.environ.get('VERCEL_ENV'))
+_HARDEN = ON_VERCEL and not DEBUG
+
+SECURE_SSL_REDIRECT = _HARDEN
+SECURE_HSTS_SECONDS = 31536000 if _HARDEN else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = _HARDEN
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin'
+CSRF_COOKIE_SECURE = _HARDEN
+SESSION_COOKIE_SECURE = _HARDEN
+
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
@@ -26,6 +40,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+X_FRAME_OPTIONS = 'DENY'
+
 ROOT_URLCONF = 'portfolio.urls'
 
 TEMPLATES = [
@@ -37,6 +53,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.template.context_processors.debug',
+                'core.context_processors.site_profile',
             ],
         },
     },

@@ -2,62 +2,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{% block title %}Martin Kiuna{% endblock %} | CS · Security · AI</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d12">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b0d12'/%3E%3Ctext x='50' y='70' font-size='54' font-family='monospace' font-weight='bold' fill='%235eead4' text-anchor='middle'%3E~/%3C/text%3E%3C/svg%3E">
+
+  <title>{% block title %}{{ profile.name }} — Software Engineer · AI, Security & Backend{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ profile.name }} builds intelligent, security-aware systems: ML-driven trading engines, autonomous threat-detection agents, and the Django &amp; FastAPI backends behind them.{% endblock %}">
+  <link rel="canonical" href="{% block canonical %}https://martinkiruna.vercel.app{{ request.path }}{% endblock %}">
+
+  {% block og %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ profile.name }} — Portfolio">
+  <meta property="og:title" content="{% block og_title %}{{ profile.name }} — Software Engineer{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ profile.tagline }}{% endblock %}">
+  <meta property="og:url" content="{% block og_url %}https://martinkiruna.vercel.app{{ request.path }}{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{% static 'img/og/og-site.png' %}{% endblock %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{% block og_image_alt %}{{ profile.name }} — Software engineer for intelligent, security-aware systems{% endblock %}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ profile.name }} — Software Engineer{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}{{ profile.tagline }}{% endblock %}">
+  <meta name="twitter:image" content="{% block twitter_image %}{% static 'img/og/og-site.png' %}{% endblock %}">
+  {% endblock %}
+
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   {% block extra_css %}{% endblock %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ profile.name }}",
+    "jobTitle": "{{ profile.role }}",
+    "address": { "@type": "PostalAddress", "addressLocality": "{{ profile.location }}" },
+    "email": "mailto:{{ profile.email }}",
+    "sameAs": ["{{ profile.github }}", "{{ profile.linkedin }}"]
+  }
+  </script>
 </head>
 <body>
 
-  <!-- SCANLINES OVERLAY -->
-  <div class="scanlines"></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
-  <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-logo">martin<span>@kiuna</span>:~$</div>
-    <ul class="nav-links">
-      <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">home</a></li>
-      <li><a href="{% url 'projects' %}" class="{% if request.resolver_match.url_name == 'projects' %}active{% endif %}">projects</a></li>
-      <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">about</a></li>
-      <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">contact</a></li>
-    </ul>
-    <div class="nav-status">
-      <span class="status-dot"></span>
-      available for internship
+  <header class="site-header" id="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="nav-logo" href="{% url 'home' %}" aria-label="{{ profile.first_name }} — home">
+        <span class="nav-logo-mark" aria-hidden="true">~/</span>{{ profile.first_name|lower }}<span class="nav-logo-accent">.dev</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}is-active{% endif %}">Home</a></li>
+        <li><a href="{% url 'projects' %}" class="nav-link {% if request.resolver_match.url_name == 'projects' or request.resolver_match.url_name == 'project_detail' %}is-active{% endif %}">Projects</a></li>
+        <li><a href="{% url 'about' %}" class="nav-link {% if request.resolver_match.url_name == 'about' %}is-active{% endif %}">About</a></li>
+        <li><a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}is-active{% endif %}">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <span class="nav-status"><span class="status-dot" aria-hidden="true"></span>{{ profile.availability }}</span>
+        <a href="{% url 'contact' %}" class="btn btn-sm btn-primary nav-cta">Let's talk</a>
+        <button class="nav-toggle" id="nav-toggle" type="button"
+                aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-menu" id="mobile-menu" hidden>
+      <ul>
+        <li><a href="{% url 'home' %}" class="mobile-link">Home</a></li>
+        <li><a href="{% url 'projects' %}" class="mobile-link">Projects</a></li>
+        <li><a href="{% url 'about' %}" class="mobile-link">About</a></li>
+        <li><a href="{% url 'contact' %}" class="mobile-link">Contact</a></li>
+      </ul>
+      <div class="mobile-menu-footer">
+        <a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:{{ profile.email }}">Email</a>
+      </div>
     </div>
-    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
-  </nav>
+  </header>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="{% url 'home' %}" onclick="toggleMenu()">Home</a>
-    <a href="{% url 'projects' %}" onclick="toggleMenu()">Projects</a>
-    <a href="{% url 'about' %}" onclick="toggleMenu()">About</a>
-    <a href="{% url 'contact' %}" onclick="toggleMenu()">Contact</a>
-  </div>
-
-  <!-- PAGE CONTENT -->
-  <main>
+  <main id="main-content">
     {% block content %}{% endblock %}
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-logo">martin<span>@kiuna</span>:~$</div>
-      <p class="footer-copy">© 2025 Martin Kiuna · Nairobi, Kenya 🇰🇪</p>
-      <div class="footer-links">
-        <a href="https://github.com/RasMatoh" target="_blank">GitHub</a>
-        <a href="www.linkedin.com/in/martin-kiuna-964124341" target="_blank">LinkedIn</a>
-        <a href="mailto:kiunamartin2004@gmail.com">Email</a>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="{% url 'home' %}">~/{{ profile.first_name|lower }}<span class="nav-logo-accent">.dev</span></a>
+        <p>{{ profile.tagline }}</p>
       </div>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <h2 class="footer-heading">Site</h2>
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'projects' %}">Projects</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer-connect">
+        <h2 class="footer-heading">Connect</h2>
+        <ul>
+          <li><a href="{{ profile.github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="{{ profile.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="mailto:{{ profile.email }}">Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© {% now "Y" %} {{ profile.name }} · {{ profile.location }}</p>
+      <p class="footer-meta">Designed &amp; built with Django</p>
     </div>
   </footer>
 
-  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/main.js' %}" defer></script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

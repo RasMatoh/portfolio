@@ -1,111 +1,125 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About{% endblock %}
+{% block title %}About — {{ profile.name }} · Software Engineer{% endblock %}
+{% block meta_description %}{{ profile.name }}: {{ profile.current_role }} on the {{ profile.current_project }}, graduating November 2026. Building intelligent, security-aware systems — ML trading engines, threat-detection agents and Django/FastAPI backends.{% endblock %}
 
 {% block content %}
 
-<section id="about-page">
+<section class="section page-head" aria-labelledby="about-heading">
   <div class="container">
-    <div class="section-label">about me</div>
+    <p class="eyebrow reveal">About</p>
+    <h1 id="about-heading" class="section-title reveal">Engineer first, degree by circumstance.</h1>
+  </div>
+</section>
 
-    <div class="about-grid">
+<section class="section section-flush" aria-label="About Martin">
+  <div class="container about-grid">
 
-      <!-- LEFT: TEXT -->
-      <div class="about-text fade-up">
-        
-        <!-- PROFILE PHOTO -->
-        <div class="profile-photo-wrap">
-          <div class="profile-photo-border">
-            <img src="{% static 'img/profile.jpg' %}" alt="Martin Kiuna" class="profile-photo">
-          </div>
-          <div class="profile-photo-tag">
-            <span class="status-dot"></span> martin_kiuna
-          </div>
-        </div>
-
-        <h1 class="section-title">Who I Am</h1>
-
-        <p>
-          Final-year <strong>Computer Science student</strong> based in Nairobi, Kenya,
-          with a deep focus on AI systems and offensive security. I build things that are
-          intelligent, secure, and production-aware — not just academic demos.
-        </p>
-        <p>
-          My core obsession is <strong>offensive security</strong> — red teaming, CTF
-          challenges, and understanding systems well enough to break them. That same
-          mindset bleeds into how I build: thinking about attack surfaces from day one.
-        </p>
-        <p>
-          Outside security, I'm deep into <strong>AI-driven trading systems</strong> —
-          using LSTM models to capture market patterns, and building the infrastructure
-          to act on those signals in real time.
-        </p>
-        <p>
-          Currently seeking an <strong>industrial attachment / internship</strong> in
-          security engineering, ML engineering, or backend development.
-        </p>
-
-        <div style="margin-top: 2rem; display:flex; gap:1rem; flex-wrap:wrap;">
-          <a href="{% url 'contact' %}" class="btn-primary">Get In Touch</a>
-          <!-- Uncomment once you add your CV to static/img/
-          <a href="{% static 'img/martin-kiuna-cv.pdf' %}" target="_blank" class="btn-secondary">Download CV</a>
-          -->
+    <div class="about-main reveal">
+      <div class="about-id">
+        <img class="about-photo" src="{% static 'img/profile.jpg' %}" alt="Portrait of {{ profile.name }}" width="96" height="96">
+        <div>
+          <h2 class="about-name">{{ profile.name }}</h2>
+          <p class="about-sub">{{ profile.role }} · {{ profile.location }}</p>
+          <p class="about-status"><span class="status-dot" aria-hidden="true"></span>{{ profile.availability }}</p>
         </div>
       </div>
 
-      <!-- RIGHT: STATS + SKILLS -->
-      <div class="about-right fade-up">
+      <div class="about-copy">
+        <p>
+          I'm a <strong>software engineer</strong> — currently freelancing at
+          <strong>{{ profile.current_employer }}</strong> on the
+          {{ profile.current_project }} — who spends most of my time building systems
+          that behave like production software: an LSTM-powered trading platform, an
+          autonomous threat-detection agent, and a cinema booking engine where
+          double-booking is impossible by design.
+        </p>
+        <p>
+          My technical center of gravity sits at the intersection of
+          <strong>machine learning</strong>, <strong>offensive security</strong> and
+          <strong>backend engineering</strong>. Red-team work taught me to think about
+          attack surfaces from the first commit; ML work taught me that a model is only
+          as good as the pipeline and schema around it.
+        </p>
+        <p>
+          I care about systems that can <strong>explain themselves</strong> — rule
+          traces in expert systems, severity levels in incident reports, backtests
+          before live trades. If a decision matters, it should be auditable.
+        </p>
+        <p>
+          I finished my <strong>Computer Science degree</strong> this year and graduate in
+          <strong>November</strong> — coursework done, dissertation built and shipped.
+          Meanwhile I'm freelancing and open to <strong>full-time engineering roles</strong>
+          in security, ML, or backend development.
+        </p>
+      </div>
 
-        <!-- STATS -->
-        <div class="stat-row">
+      <div class="about-actions">
+        <a class="btn btn-primary" href="{% url 'contact' %}">Get in touch</a>
+        <a class="btn btn-ghost" href="{% static profile.cv %}" target="_blank" rel="noopener noreferrer">Download CV</a>
+      </div>
+    </div>
+
+    <aside class="about-side">
+      <!-- QUICK FACTS -->
+      <div class="facts-card reveal">
+        <h2 class="facts-title">Quick facts</h2>
+        <ul class="facts-list">
           {% for stat in stats %}
-          <div class="stat-cell">
-            <span class="stat-num">{{ stat.number }}</span>
-            <span class="stat-lbl">{{ stat.label }}</span>
-          </div>
+          <li><span class="fact-number">{{ stat.number }}</span> {{ stat.label|lower }}</li>
           {% endfor %}
-        </div>
-
-        <!-- SKILLS -->
-        {% for group, items in skills_list %}
-        <div class="skills-group">
-          <div class="skills-group-title">{{ group }}</div>
-          <div class="skills-list">
-            {% for skill in items %}
-            <span class="skill-chip">{{ skill }}</span>
-            {% endfor %}
-          </div>
-        </div>
-        {% endfor %}
-
-
+        </ul>
       </div>
-    </div>
 
-    <!-- CURRENTLY LEARNING -->
-    <div class="learning-bar fade-up">
-      <div class="section-label" style="margin-top:4rem;">currently exploring</div>
-      <div class="learning-items">
-        <div class="learning-item">
-          <span class="learning-icon">🔴</span>
-          <span>Advanced Red Teaming</span>
-        </div>
-        <div class="learning-item">
-          <span class="learning-icon">🤖</span>
-          <span>Autonomous AI Agents</span>
-        </div>
-        <div class="learning-item">
-          <span class="learning-icon">📡</span>
-          <span>Network Protocol Analysis</span>
-        </div>
-        <div class="learning-item">
-          <span class="learning-icon">⛓️</span>
-          <span>Blockchain & DeFi Security</span>
-        </div>
+      <!-- SKILLS -->
+      {% for group, items in skills_list %}
+      <div class="skills-card reveal">
+        <h2 class="skills-title">{{ group }}</h2>
+        <ul class="chip-list">
+          {% for skill in items %}<li class="chip">{{ skill }}</li>{% endfor %}
+        </ul>
       </div>
-    </div>
+      {% endfor %}
+    </aside>
+  </div>
+</section>
 
+<!-- JOURNEY -->
+<section class="section section-alt" aria-labelledby="journey-heading">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">The journey</p>
+      <h2 id="journey-heading" class="section-title">Where I've been, where I'm going</h2>
+    </div>
+    <ol class="timeline">
+      {% for item in timeline %}
+      <li class="timeline-item timeline-{{ item.kind }} reveal">
+        <span class="timeline-marker" aria-hidden="true"></span>
+        <div class="timeline-card">
+          <span class="timeline-period">{{ item.period }}</span>
+          <h3 class="timeline-title">{{ item.title }}</h3>
+          <p class="timeline-org">{{ item.org }}</p>
+          <p class="timeline-desc">{{ item.desc }}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<!-- CURRENTLY EXPLORING -->
+<section class="section" aria-labelledby="learning-heading">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Currently exploring</p>
+      <h2 id="learning-heading" class="section-title">What's next on the bench</h2>
+    </div>
+    <ul class="learning-strip">
+      {% for topic in learning %}
+      <li class="learning-item reveal">{{ topic }}</li>
+      {% endfor %}
+    </ul>
   </div>
 </section>
 

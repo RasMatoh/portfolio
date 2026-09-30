@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Page not found (404) — {{ profile.name }}{% endblock %}
+{% block meta_description %}The page you're looking for doesn't exist. Head back to Martin Kiuna's projects, about page or contact details.{% endblock %}
+{% block canonical %}https://martinkiruna.vercel.app{{ request.path }}{% endblock %}
+
+{% block content %}
+
+<section class="section notfound" aria-labelledby="nf-heading">
+  <div class="container notfound-inner">
+    <p class="nf-code" aria-hidden="true">404</p>
+    <h1 id="nf-heading" class="section-title">This route returned an error.</h1>
+    <p class="section-sub" style="margin-inline:auto;">
+      The page you're looking for doesn't exist — likely moved, renamed, or never deployed.
+      The rest of the site is up and healthy.
+    </p>
+    <div class="nf-terminal" aria-hidden="true">
+      <p><span class="t-prompt">$</span> curl -I {{ request.path }}</p>
+      <p class="t-err">HTTP/2 404</p>
+      <p><span class="t-prompt">$</span> <span class="t-cursor"></span></p>
+    </div>
+    <div class="nf-actions">
+      <a class="btn btn-primary" href="{% url 'home' %}">Back to safety</a>
+      <a class="btn btn-ghost" href="{% url 'projects' %}">View projects</a>
+      <a class="btn btn-ghost" href="{% url 'contact' %}">Contact me</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
