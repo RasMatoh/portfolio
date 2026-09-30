@@ -47,11 +47,11 @@ python manage.py test          # 18 tests: routes, filters, 404, SEO, data schem
 
 ## Deployment (Vercel)
 
-- `vercel.json` routes `/static/*` to the committed static files and everything
-  else to `portfolio/wsgi.py`. `staticfiles/` is gitignored; run
-  `python manage.py collectstatic --noinput` before pushing, **or** switch to a
-  Vercel build step (`Build Command: python manage.py collectstatic --noinput`)
-  and let Vercel generate it — recommended.
+- `vercel.json` ships `staticfiles/` via `@vercel/static` (served at `/static/*`)
+  and routes everything else to `portfolio/wsgi.py`, where Whitenoise serves
+  static files as a fallback. **Run `python manage.py collectstatic --noinput`
+  and commit the output whenever `static/` changes** — the deploy serves what's
+  in the repo.
 - Security headers (HSTS, HTTPS redirect, secure cookies) activate only when
   Vercel's `VERCEL_ENV` is present, so local dev over http keeps working.
 - Pages are cached server-side for 1 hour (`cache_page`) — content is read-only,

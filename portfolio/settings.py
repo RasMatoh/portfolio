@@ -14,6 +14,9 @@ ON_VERCEL = bool(os.environ.get('VERCEL_ENV'))
 _HARDEN = ON_VERCEL and not DEBUG
 
 SECURE_SSL_REDIRECT = _HARDEN
+# Behind Vercel's proxy, Django would otherwise see plain http and
+# SECURE_SSL_REDIRECT would loop-redirect. Vercel always sets this header.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_HSTS_SECONDS = 31536000 if _HARDEN else 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = _HARDEN
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'

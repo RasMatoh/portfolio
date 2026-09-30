@@ -11,11 +11,10 @@ venv/
 # User-generated state (not used by the site)
 db.sqlite3
 
-# Django collectstatic output — regenerated at deploy time.
-# NOTE: vercel.json serves /static/* from the repo filesystem; if you
-# enable a Vercel build step (see README), keep this ignored and add
-# "python manage.py collectstatic --noinput" to the build command.
-staticfiles/
+# NOTE: staticfiles/ (collectstatic output) is COMMITTED on purpose —
+# vercel.json ships it as a static build output for /static/*.
+# Run `python manage.py collectstatic --noinput` after changing
+# anything in static/ and include the result in the commit.
 
 # Throwaway tooling venv (Pillow/PyMuPDF for asset pipeline)
 .tools/venv/
