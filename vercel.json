@@ -8,12 +8,12 @@
         "maxLambdaSize": "15mb",
         "runtime": "python3.12"
       }
-    },
+    }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/$1"
+      "dest": "/static/$1"
     },
     {
       "src": "/(.*)",
